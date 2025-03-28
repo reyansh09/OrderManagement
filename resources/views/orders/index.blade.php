@@ -1,37 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card p-3">
-        <h4>Order Details</h4>
+    <!-- <div class="container">
+        <h3 class="text-center">Search Products</h3>
+
+        <div class="mb-3">
+            <input type="text" id="search" class="form-control" placeholder="Search product by name...">
+        </div>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Order Date</th>
-                    <th>Order ID</th>
-                    <th>Buyer Details</th>
-                    <th>Total Price</th>
-                    <th>Action</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($orders as $order)
-                    <tr>
-                        <td>{{ $order->created_at }}</td>
-                        <td><a href="#">{{ $order->order_id }}</a></td>
-                        <td>
-                            <strong>{{ $order->buyer_name }}</strong><br>
-                            {{ $order->email }}<br>
-                            Phone: {{ $order->phone }}<br>
-                            Address: {{ $order->address }}
-                        </td>
-                        <td>₹{{ $order->total_price }}</td>
-                        <td>
-                            <button class="btn btn-secondary">Track</button>
-                            <a href="{{ url('/orders/invoice/'.$order->id) }}" class="btn btn-link">Generate Invoice</a>
-                        </td>
-                    </tr>
-                @endforeach
+            <tbody id="product-table">
+                <tr><td colspan="3" class="text-center">Start typing to search...</td></tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#search-button').on('click', function () {
+        let query = $('#search-query').val();
+        let searchBy = $("input[name='searchBy']:checked").val();
+
+        if (query.length < 3) {
+            alert("Please enter at least 3 characters to search.");
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('search.orders') }}",
+            method: "GET",
+            data: { query: query, searchBy: searchBy },
+            beforeSend: function () {
+                $('#search-results').html('<p>Searching...</p>');
+            },
+            success: function (response) {
+                $('#search-results').html(response);
+            },
+            error: function () {
+                $('#search-results').html('<p class="text-danger">Error fetching results.</p>');
+            }
+        });
+    });
+});
+</script>
+
 @endsection

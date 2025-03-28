@@ -68,14 +68,16 @@
     <div class="container mt-3">
         <h3 class="text-center">SEARCH ORDER</h3>
         <div class="search-container">
-            <span>By</span>
-            <input type="radio" name="searchBy" value="order_id"> Order ID
-            <input type="radio" name="searchBy" value="mobile"> Mobile
-            <input type="radio" name="searchBy" value="name"> Name
-            <input type="radio" name="searchBy" value="email" checked> Email
-            <input type="text" placeholder="Enter Order ID or Email">
-            <button>SEARCH ORDER</button>
-        </div>
+        <span>By</span>
+        <input type="radio" name="searchBy" value="order_id"> Order ID
+        <input type="radio" name="searchBy" value="mobile"> Mobile
+        <input type="radio" name="searchBy" value="name"> Name
+        <input type="radio" name="searchBy" value="email" checked> Email
+        <input type="text" id="search-query" placeholder="Enter Order ID or Email">
+        <button id="search-button">SEARCH ORDER</button>
+    </div>
+    <div id="search-results"></div> <!-- Results will be displayed here -->
+
         <hr>
         @yield('content')
     </div>
